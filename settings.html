@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Einstellungen</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Einstellungen</h1>
+        </header>
+        <main>
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label for="brunstTage">Tage bis nächste Brunst:</label>
+                    <input type="number" id="brunstTage" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="traechtigkeitTage">Tage bis Trächtigkeitsuntersuch:</label>
+                    <input type="number" id="traechtigkeitTage" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="trockenstellenTage">Tage bis Trockenstellen:</label>
+                    <input type="number" id="trockenstellenTage" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="abkalbeTage">Tage bis Abkalbedatum:</label>
+                    <input type="number" id="abkalbeTage" min="1" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-button">Speichern</button>
+                    <button type="button" onclick="window.history.back()" class="cancel-button">Zurück</button>
+                </div>
+            </form>
+            <p id="settingsSavedMsg" style="color:green;display:none;">Einstellungen gespeichert!</p>
+        </main>
+    </div>
+    <script>
+// Einstellungen laden und speichern
+const defaultSettings = { brunst: 21, traechtigkeit: 42, trockenstellen: 240, abkalbe: 285 };
+function loadSettings() {
+    const s = JSON.parse(localStorage.getItem('brunstkalenderSettings')) || defaultSettings;
+    document.getElementById('brunstTage').value = s.brunst;
+    document.getElementById('traechtigkeitTage').value = s.traechtigkeit;
+    document.getElementById('trockenstellenTage').value = s.trockenstellen || 240;
+    document.getElementById('abkalbeTage').value = s.abkalbe;
+}
+document.getElementById('settingsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const s = {
+        brunst: parseInt(document.getElementById('brunstTage').value, 10),
+        traechtigkeit: parseInt(document.getElementById('traechtigkeitTage').value, 10),
+        trockenstellen: parseInt(document.getElementById('trockenstellenTage').value, 10),
+        abkalbe: parseInt(document.getElementById('abkalbeTage').value, 10)
+    };
+    localStorage.setItem('brunstkalenderSettings', JSON.stringify(s));
+    document.getElementById('settingsSavedMsg').style.display = 'block';
+    setTimeout(()=>{document.getElementById('settingsSavedMsg').style.display='none';}, 1500);
+});
+loadSettings();
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brunstkalender</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <div class="settings-container">
+            <button id="settingsBtn" class="settings-button" title="Einstellungen">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="#4CAF50"/>
+                    <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7zm6.32-2.25l1.43-1.43a1 1 0 0 0 0-1.42l-1.43-1.43a1 1 0 0 0-1.42 0l-.34.34a7.03 7.03 0 0 0-1.6-.93l-.05-.48A1 1 0 0 0 14 5h-2a1 1 0 0 0-1 .89l-.05.48a7.03 7.03 0 0 0-1.6.93l-.34-.34a1 1 0 0 0-1.42 0L5.68 10.4a1 1 0 0 0 0 1.42l1.43 1.43a1 1 0 0 0 1.42 0l.34-.34c.5.36 1.04.66 1.6.93l.05.48A1 1 0 0 0 10 19h2a1 1 0 0 0 1-.89l.05-.48c.56-.27 1.1-.57 1.6-.93l.34.34a1 1 0 0 0 1.42 0z" fill="#fff"/>
+                </svg>
+            </button>
+        </div>
+        <!-- Modal Dialog -->
+        <div id="entryDialog" class="modal">
+            <div class="modal-content">
+                <h2>Neuer Eintrag</h2>
+                <form id="entryForm">
+                    <div class="form-group">
+                        <label for="tvdInput">TVD-Nr.:</label>
+                        <input type="text" id="tvdInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nameInput">Name:</label>
+                        <input type="text" id="nameInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateInput">Datum:</label>
+                        <input type="date" id="dateInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="statusInput">Status:</label>
+                        <select id="statusInput" required>
+                            <option value="Brunst">Brunst</option>
+                            <option value="Besamt">Besamt</option>
+                            <option value="Trächtig">Trächtig</option>
+                            <option value="Nicht trächtig">Nicht trächtig</option>
+                            <option value="Abgekalbt">Abgekalbt</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancelBtn" class="cancel-button">Abbrechen</button>
+                        <button type="submit" class="save-button">Speichern</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Detail-Modal für TVD-Nr. Klick -->
+        <div id="detailDialog" class="modal">
+            <div class="modal-content">
+                <h2>Eintragsdetails</h2>
+                <div id="detailContent"></div>
+                <div class="form-actions">
+                    <button type="button" id="closeDetailBtn" class="cancel-button">Schließen</button>
+                </div>
+            </div>
+        </div>
+        <header>
+            <h1>Brunstkalender</h1>
+        </header>
+        <main>
+            <div class="table-container">
+                <div id="saveNotification" class="save-notification"></div>
+                <button id="addEntryBtn" class="floating-add-button" title="Neuer Eintrag">+</button>
+                <table id="brunstTable">
+                    <thead>
+                        <tr>
+                            <th>TVD-Nr.</th>
+                            <th>Name</th>
+                            <th>Datum</th>
+                            <th>Status</th>
+                            <th>Nächste Brunst</th>
+                            <th>Trächtigkeitsuntersuch</th>
+                            <th>Trockenstellen</th>
+                            <th>Abkalbedatum</th>
+                            <th>Aktion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="brunstTableBody">
+                        <!-- Tabelleneinträge werden dynamisch hinzugefügt -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 Brunstkalender</p>
+        </footer>
+    </div>
+    <script src="js/main.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+    </script>
+</body>
+</html>
